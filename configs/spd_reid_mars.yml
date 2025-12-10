@@ -11,7 +11,7 @@ MODEL:
   TRIPLET_LOSS_WEIGHT : 1.0
   SIE_CAMERA: True
   SIE_COE : 1.0
-  SPD_DIM: [768, 384, 192, 96]
+  SPD_DIM: [768, 300, 200, 100]
   DR: 0.4
 
 INPUT:
@@ -84,6 +84,7 @@ OUTPUT_DIR: 'logs/marsdl/vit-with-cam-cov-patches-channel-768-dr04-spd_dense-96-
 #_cat_cls_m_cat_cls_m
 #  NAMES: ('prid')
 #OUTPUT_DIR: 'logs/prid/vit-with-cam-cov-patches-channel-768-dr03-spd_dense-30-before-bn-lr0.0005-only_Spd-e300-025id-1025'
+
 
 
 #OUTPUT_DIR: 'logs/eval/i-lids/extract-baseline'
