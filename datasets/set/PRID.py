@@ -32,12 +32,14 @@ class PRID(object):
     root  = "...../datasets/reid/PRID/prid_2011"
     
     # root = './data/prid2011'
-    dataset_url = 'https://files.icg.tugraz.at/f/6ab7e8ce8f/?raw=1'
-    split_path = osp.join(root, 'splits_prid2011.json')
-    cam_a_path = osp.join(root, 'prid_2011/multi_shot', 'cam_a')
-    cam_b_path = osp.join(root, 'prid_2011/multi_shot', 'cam_b')
 
-    def __init__(self, split_id=0, min_seq_len=0):
+    def __init__(self, root, split_id=0, min_seq_len=0):
+        self.root = osp.join(root, 'prid_2011')
+        # root = './data/prid2011'
+        self.dataset_url = 'https://files.icg.tugraz.at/f/6ab7e8ce8f/?raw=1'
+        self.split_path = osp.join(self.root, 'splits_prid2011.json')
+        self.cam_a_path = osp.join(self.root, 'prid_2011/multi_shot', 'cam_a')
+        self.cam_b_path = osp.join(self.root, 'prid_2011/multi_shot', 'cam_b')
         self._check_before_run()
         splits = read_json(self.split_path)
         if split_id >=  len(splits):
@@ -123,3 +125,4 @@ class PRID(object):
         num_pids = len(dirnames)
 
         return tracklets, num_tracklets, num_pids, num_imgs_per_tracklet
+
