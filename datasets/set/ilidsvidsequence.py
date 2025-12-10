@@ -53,19 +53,17 @@ class iLIDSVID(object):
     Args:
         split_id (int): indicates which split to use. There are totally 10 splits.
     """
-    root = "...../datasets/reid/i-LIDS-VID"
-    # root = "/HOME/scz0sai/run/datasets"
-    # root = '/mnt/scratch/1/pathak/data/iLIDS'
-    # root = './data/ilids-vid'
-    dataset_url = 'http://www.eecs.qmul.ac.uk/~xiatian/iLIDS-VID/iLIDS-VID.tar'
-    data_dir = osp.join(root, 'i-LIDS-VID')
-    split_dir = osp.join(root, 'train-test people splits')
-    split_mat_path = osp.join(split_dir, 'train_test_splits_ilidsvid.mat')
-    split_path = osp.join(root, 'splits.json')
-    cam_1_path = osp.join(root, 'i-LIDS-VID/sequences/cam1')
-    cam_2_path = osp.join(root, 'i-LIDS-VID/sequences/cam2')
-
-    def __init__(self, split_id=0):
+    
+       def __init__(self,root, split_id=0):
+        self.root = root
+        self.dataset_url = 'http://www.eecs.qmul.ac.uk/~xiatian/iLIDS-VID/iLIDS-VID.tar'
+        self.data_dir = osp.join(self.root, 'i-LIDS-VID')
+        self.split_dir = osp.join(self.root, 'train-test people splits')
+        self.split_mat_path = osp.join(self.split_dir, 'train_test_splits_ilidsvid.mat')
+        self.split_path = osp.join(self.root, 'splits.json')
+        self.cam_1_path = osp.join(self.root, 'i-LIDS-VID/sequences/cam1')
+        self.cam_2_path = osp.join(self.root, 'i-LIDS-VID/sequences/cam2')
+           
         self._download_data()
         self._check_before_run()
 
@@ -216,5 +214,6 @@ class iLIDSVID(object):
 
         num_tracklets = len(tracklets)  # 300 150
         num_pids = len(dirnames)  # 150 150
+
 
         return tracklets, num_tracklets, num_pids, num_imgs_per_tracklet
