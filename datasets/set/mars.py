@@ -37,17 +37,17 @@ class infostruct(object):
 
 
 class Mars(object):
-    root = '...../datasets/reid/MARS'
-    train_name_path = osp.join(root, 'info/train_name.txt')
-    test_name_path = osp.join(root, 'info/test_name.txt')
-    track_train_info_path = osp.join(root, 'info/tracks_train_info.mat')
-    track_test_info_path = osp.join(root, 'info/tracks_test_info.mat')
-    query_IDX_path = osp.join(root, 'info/query_IDX.mat')
-    split_train_json_path = osp.join(root, 'split_train.json')
-    split_query_json_path = osp.join(root, 'split_query.json')
-    split_gallery_json_path = osp.join(root, 'split_gallery.json')
-
-    def __init__(self, root='../data/Mars/', min_seq_len=0):
+        def __init__(self, root='../data/Mars/', min_seq_len=0):
+        self.root = root
+        self.train_name_path = osp.join(root, 'info/train_name.txt')
+        self.test_name_path = osp.join(root, 'info/test_name.txt')
+        self.track_train_info_path = osp.join(root, 'info/tracks_train_info.mat')
+        self.track_test_info_path = osp.join(root, 'info/tracks_test_info.mat')
+        self.query_IDX_path = osp.join(root, 'info/query_IDX.mat')
+        self.split_train_json_path = osp.join(root, 'split_train.json')
+        self.split_query_json_path = osp.join(root, 'split_query.json')
+        self.split_gallery_json_path = osp.join(root, 'split_gallery.json')
+            
         self._check_before_run()
 
         train_names = self._get_names(self.train_name_path)  # <class 'list'>: <Len: 509914> '0001C1T0001F001.jpg'
@@ -59,7 +59,7 @@ class Mars(object):
 
         query_IDX = loadmat(self.query_IDX_path)['query_IDX'].squeeze()  # numpy.ndarray (1980,)  [4130, 4138...]
         query_IDX -= 1  # index from 0 [4129,4137....]
-        track_query = track_test[query_IDX, :]  # 对应行的小段视频信息,[[171610 171649 2 1],[172214 172313 2 2]...]
+        track_query = track_test[query_IDX, :]  # [[171610 171649 2 1],[172214 172313 2 2]...]
 
         gallery_IDX = [i for i in range(track_test.shape[0]) if i not in query_IDX]  # gallery = 10200
         track_gallery = track_test[gallery_IDX, :]  # <class 'tuple'>: (12180, 4)      [[1 24 -1 1][25 34 -1 1]...]
@@ -280,3 +280,4 @@ class Mars(object):
 if __name__ == '__main__':
     # test
     dataset = Mars()
+
