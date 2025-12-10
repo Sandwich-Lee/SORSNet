@@ -7,7 +7,7 @@ MODEL:
   NAME: 'ViT-B-16'
   # NAME: 'RN50'
   STRIDE_SIZE: [16, 16]
-  ID_LOSS_WEIGHT : 0.25
+  ID_LOSS_WEIGHT : 1.0
   TRIPLET_LOSS_WEIGHT : 1.0
   SIE_CAMERA: True
   SIE_COE : 1.0
@@ -88,3 +88,4 @@ OUTPUT_DIR: 'logs/marsdl/vit-with-cam-cov-patches-channel-768-dr04-spd_dense-96-
 
 
 #OUTPUT_DIR: 'logs/eval/i-lids/extract-baseline'
+
