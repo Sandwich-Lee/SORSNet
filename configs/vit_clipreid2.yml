@@ -1,0 +1,87 @@
+MODEL:
+  DEVICE_ID: 5
+  PRETRAIN_CHOICE: 'imagenet'
+  METRIC_LOSS_TYPE: 'triplet'
+  IF_LABELSMOOTH: 'on'
+  IF_WITH_CENTER: 'no'
+  NAME: 'ViT-B-16'
+  # NAME: 'RN50'
+  STRIDE_SIZE: [16, 16]
+  ID_LOSS_WEIGHT : 1.0
+  TRIPLET_LOSS_WEIGHT : 1.0
+  SIE_CAMERA: True
+  SIE_COE : 1.0
+  SPD_DIM: [768, 300, 100, 50]
+  DR: 0.4
+
+INPUT:
+  SIZE_TRAIN: [256, 128]
+  SIZE_TEST: [256, 128]
+  PROB: 0.5 # random horizontal flip
+  RE_PROB: 0.5 # random erasing
+  PADDING: 10
+  PIXEL_MEAN: [0.5, 0.5, 0.5]
+  PIXEL_STD: [0.5, 0.5, 0.5]
+  SEQ_LEN: 8
+
+
+DATALOADER:
+  SAMPLER: 'softmax_triplet'
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 8
+
+SOLVER:
+  MARGIN: 0.3
+  IMS_PER_BATCH: 16
+  OPTIMIZER_NAME: "Adam"
+  BASE_LR: 0.000005
+  BASE_LR_STIEFEL: 0.0005
+  WARMUP_METHOD: 'linear'
+  WARMUP_ITERS: 8
+  WARMUP_FACTOR: 0.1
+  WEIGHT_DECAY:  0.0001
+  WEIGHT_DECAY_BIAS: 0.0001
+  LARGE_FC_LR: True
+  MAX_EPOCHS: 300
+  CHECKPOINT_PERIOD: 60
+  LOG_PERIOD: 50
+  EVAL_PERIOD: 10
+  BIAS_LR_FACTOR: 2
+
+  STEPS: []
+  GAMMA: 0.1
+  
+TEST:
+  EVAL: True
+  IMS_PER_BATCH:
+  RE_RANKING: False
+  WEIGHT: ''
+  NECK_FEAT: 'before'
+  FEAT_NORM: 'yes'
+
+DATASETS:
+#  NAMES: ('mars')
+#  ROOT_DIR: ('/data_C/minzhi/datasets/reid/MARS')
+##OUTPUT_DIR: 'logs/mars/vit-with-cam-cov-patches-channel-768-dr04-spd_dense-100-before-bn-lr0.0005-margin0.5-STEPS[60,100,200]-only_Spd-e300-1id-newoptim-1122'
+##OUTPUT_DIR: 'logs/mars/debug-1031'
+#OUTPUT_DIR: 'logs/mars-ablation/vit-cov-sodo-dense_spd[768-50]-1126'
+
+
+#  NAMES: ('mars-dl')
+#  ROOT_DIR: ('/data_C/minzhi/datasets/reid/MARS-DL/MARS-DL')
+#OUTPUT_DIR: 'logs/marsdl/vit-with-cam-cov-patches-channel-768-dr05-spd_dense-96-before-bn-lr0.0005-STEPS[30, 50, 80]-only_Spd-e300-1id-newoptim-1111'
+###OUTPUT_DIR: 'mars-test_rrs-after-->after'
+
+#  NAMES: ('ilidsvidsequence')
+#  ROOT_DIR: ('/data_C/minzhi/datasets/reid/iLIDS-VID')
+## OUTPUT_DIR: 'logs/ilids_vit_only-768-400-cov-patches-no-catMean-400-spd-50-before-bn-lr0.00005-only-e300-1id1009'
+##OUTPUT_DIR: 'logs/ilids/vit-with-cam-cov-patches-channel-768-dr04-spd_dense-30-before-bn-lr0.0005-only_Spd-e300-025id-1028'
+#OUTPUT_DIR: 'logs/ilids-ablation/768-50'
+#OUTPUT_DIR: 'logs/eval/i-lids/extract-baseline'
+  NAMES: ('lsvid')
+  ROOT_DIR: ('/data_C/minzhi/datasets/reid/LS-VID')
+#OUTPUT_DIR: 'logs/lsvid/vit-with-cam-cov-patches-channel-768-dr04-spd_dense-96-after-bn-lr0.0005-only_Spd-e300-1id-1029'
+OUTPUT_DIR: 'logs/lsvid-ablation/vit-cov-sodo-dense_spd[768-300-100-50]-1127'
+
+# NAMES: ('prid')
+#OUTPUT_DIR: 'logs/prid/vit-with-cam-cov-patches-channel-768-dr03-spd_dense-30-before-bn-lr0.0005-only_Spd-e300-025id-1025'
