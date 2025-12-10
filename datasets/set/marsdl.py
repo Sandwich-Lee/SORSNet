@@ -18,19 +18,20 @@ class infostruct(object):
 
 
 class Mars_dl(object):
-    root = '...../datasets/reid/MARS-DL/MARS-DL'
-    train_name_path = osp.join(root, 'info/train_name.txt')
-    test_name_path = osp.join(root, 'info/test_name.txt')
-    track_train_info_path = osp.join(root, 'info/tracks_train_info.mat')
 
-    track_test_info_path = osp.join(root, 'info/tracks_test_info.mat')
+        def __init__(self, root='.../datasets/reid/MARS-DL/MARS-DL', min_seq_len=0, new_eval=True):
+        self.root = root
+        self.train_name_path = osp.join(root, 'info/train_name.txt')
+        self.test_name_path = osp.join(root, 'info/test_name.txt')
+        self.track_train_info_path = osp.join(root, 'info/tracks_train_info.mat')
 
-    query_IDX_path = osp.join(root, 'info/query_IDX.mat')
-    split_train_json_path = osp.join(root, 'split_train.json')
-    split_query_json_path = osp.join(root, 'split_query.json')
-    split_gallery_json_path = osp.join(root, 'split_gallery.json')
+        self.track_test_info_path = osp.join(root, 'info/tracks_test_info.mat')
 
-    def __init__(self, root='...../datasets/reid/MARS-DL/MARS-DL', min_seq_len=0, new_eval=True):
+        self.query_IDX_path = osp.join(root, 'info/query_IDX.mat')
+        self.split_train_json_path = osp.join(root, 'split_train.json')
+        self.split_query_json_path = osp.join(root, 'split_query.json')
+        self.split_gallery_json_path = osp.join(root, 'split_gallery.json')
+    
         self._check_before_run()
         # new mars-dl
         self.new_eval = new_eval
@@ -277,3 +278,4 @@ class Mars_dl(object):
 if __name__ == '__main__':
     # test
     dataset = Mars_dl()
+
