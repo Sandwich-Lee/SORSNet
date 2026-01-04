@@ -52,38 +52,6 @@ def load_clip_to_cpu(backbone_name, h_resolution, w_resolution, vision_stride_si
     return model
 
 
-def spd_logeuclidean_mean_batch(X_list, weights=None, eps=1e-6):
-    """
-    计算多个SPD矩阵的Log-Euclidean均值（Fréchet mean）
-    X_list: list[Tensor]，每个形状为 (B, n, n)
-    weights: list或Tensor，长度与X_list相同，和为1
-    """
-    N = len(X_list)
-    if weights is None:
-        weights = [1.0 / N] * N
-    else:
-        weights = torch.tensor(weights, device=X_list[0].device, dtype=X_list[0].dtype)
-        weights = weights / weights.sum()
-
-    # 累积加权log
-    log_sum = 0
-    for X, w in zip(X_list, weights):
-        u, s, _ = torch.linalg.svd(X)
-        s = s.log()  # 对数
-        logX = u @ torch.diag_embed(s) @ (u.transpose(-1, -2))  # 重新构造对称矩阵
-        # eigvals, eigvecs = torch.linalg.eigh(X)
-        # eigvals = torch.clamp(eigvals, min=eps)
-        # logX = eigvecs @ torch.diag_embed(torch.log(eigvals)) @ eigvecs.transpose(-1, -2)
-        log_sum = log_sum + w * logX
-    # return log_sum
-    # exp回流形
-    s, u = torch.linalg.eigh(log_sum)
-    expM = u @ torch.diag_embed(torch.exp(s)) @ u.transpose(-1, -2)
-    return expM
-
-
-
-
 class SymmetricDropout(nn.Module):
     """
     Symmetric Random Dropout to the SPD matrices
@@ -318,3 +286,4 @@ class build_transformer(nn.Module):  # 1
 def make_model(cfg, num_class, camera_num, view_num):  # 0
     model = build_transformer(num_class, camera_num, view_num, cfg)
     return model
+
